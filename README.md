@@ -72,33 +72,10 @@ Given a long Bengali audio recording of a multi-speaker conversation, the task w
 
 **Post-processing:** Segments shorter than 0.3 s were removed; gaps smaller than 0.15 s between same-speaker segments were merged.
 
----
 
-## Setup
 
-```bash
-pip install transformers datasets peft accelerate evaluate jiwer
-pip install torchaudio soundfile librosa
-pip install speechbrain silero-vad scikit-learn scipy
-pip install bitsandbytes webrtcvad audiomentations
-```
 
-Run the notebooks in order:
-1. `whisper-iterative-adapter-training.ipynb` — trains ASR adapters (run once per iteration, updating `CURRENT_ITERATION` and `PREVIOUS_ADAPTER_PATH`)
-2. `long-form-voice-recognition-inference.ipynb` — generates ASR submission
-3. `diarization-bangla.ipynb` — trains encoder and generates diarization submission
 
----
-
-## Key Decisions
-
-**Why iterative adapter stacking instead of full fine-tuning?** The Bengali audio dataset is large enough that training on all of it at once risks overfitting on later data and forgetting earlier patterns. Sequential LoRA adapters with frozen predecessors give the model cumulative coverage without that tradeoff.
-
-**Why remove AHC from diarization?** BIC was consistently estimating speaker counts close to ground truth (9–20 speakers). AHC was then merging those estimates aggressively down to 3–8. Removing it and trusting BIC directly improved speaker count accuracy.
-
-**Why no beam search at inference?** Greedy decoding (`num_beams=1`) was used for speed given the chunked approach on hour-long files. The quality difference versus beam search was negligible at the chunk level.
-
----
 
 ## Datasets
 
