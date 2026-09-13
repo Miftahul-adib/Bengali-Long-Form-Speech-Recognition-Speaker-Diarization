@@ -1,6 +1,6 @@
 # Bengali Long-Form Speech Recognition & Speaker Diarization
 
-Solutions to two tracks of the [DL Sprint 4.0](https://www.kaggle.com/competitions/dl-sprint-4-0-bengali-long-form-speech-recognition) Kaggle competition.
+Solutions to two tracks of the DL Sprint 4.0 Kaggle competition.
 
 | Track | Score |
 |---|---|
